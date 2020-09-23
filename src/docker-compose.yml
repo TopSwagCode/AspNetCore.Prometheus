@@ -1,0 +1,53 @@
+version : '3'
+ 
+services:
+  webapi:
+    image: webapi
+    ports:
+      - 5000:5000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+    networks:
+      - dotnetcorepromgrafana
+
+  loadgenerator:
+    image: loadgenerator
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - APIBASEURL=http://webapi:5000
+    networks:
+      - dotnetcorepromgrafana
+    depends_on:
+      - "webapi"
+
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - dotnetcorepromgrafana
+    depends_on:
+      - "webapi"
+
+  grafana: 
+    image: grafana/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: always
+    ports:
+      - 3000:3000
+    volumes: 
+      - grafana_storage:/var/lib/grafana
+    networks:
+      - dotnetcorepromgrafana
+    depends_on:
+      - "prometheus"
+
+volumes:
+  grafana_storage:
+networks:
+  dotnetcorepromgrafana:
