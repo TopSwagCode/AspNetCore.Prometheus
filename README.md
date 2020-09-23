@@ -1,4 +1,4 @@
-# AspNetCore.Prometheus
+# AspNetCore.Prometheus ![.NET Core](https://github.com/TopSwagCode/AspNetCore.Prometheus/workflows/.NET%20Core/badge.svg)
 
 <a href="https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1"><img src="assets/aspnetcore.png" height="50px"></a>
 <a href="https://prometheus.io/"><img src="assets/prometheus.png" height="50px"></a>
